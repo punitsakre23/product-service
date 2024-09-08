@@ -1,0 +1,97 @@
+openapi: 3.0.1
+info:
+  title: Product Service
+  description: Product Service
+  version: 1.0.0
+
+servers:
+  - url: http://localhost
+    description: Local server
+
+paths:
+  /products:
+    get:
+      tags:
+        - Product Controller
+      summary: Get all products
+      operationId: getAllProducts
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllProducts'
+
+components:
+  schemas:
+    GetAllProducts:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-09-08T14:32:45.123"
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        productId:
+          type: string
+          example: "STD"
+        effectiveFrom:
+          type: string
+          format: date
+          example: "2024-09-08T14:32:45.123"
+        effectiveTo:
+          type: string
+          format: date
+          example: "2024-09-08T14:32:45.123"
+        bookingChannel:
+          type: string
+          example: "IPHONE"
+        productGroupId:
+          type: integer
+          example: 2
+        isPlatformFeeApplicable:
+          type: string
+          example: "YES"
+        remarks:
+          type: string
+          example: "remarks"
+        platformFeeThresholdLimit:
+          type: number
+          format: double
+          example: 1.1
+        lowerPlatformFee:
+          type: number
+          format: double
+          example: 2.3
+        higherPlatformFee:
+          type: number
+          format: double
+          example: 5
+        available:
+          type: boolean
+          example: true
+        createdBy:
+          type: string
+          example: "SYSTEM"
+        createdDate:
+          type: string
+          format: date-time
+          example: "2024-09-08T14:32:45.123"
+        updatedBy:
+          type: string
+          example: "SYSTEM"
+        updatedDate:
+          type: string
+          format: date-time
+          example: "2024-09-08T14:32:45.123"
