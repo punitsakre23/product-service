@@ -101,6 +101,12 @@
 			<artifactId>jakarta.validation-api</artifactId>
 			<version>3.0.2</version> <!-- Latest stable version -->
 		</dependency>
+
+		<!-- Spring Security for authentication -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -133,16 +139,16 @@
 						<configuration>
 							<generatorName>spring</generatorName>
 							<!-- Specify the location of your OpenAPI YAML file -->
-							<inputSpec>${project.basedir}/src/main/resources/product.yaml</inputSpec>
-							<output>${project.build.directory}/generated-sources/openapi</output>
+							<inputSpec>${project.basedir}/src/main/resources/openapi/product.yaml</inputSpec>
+							<output>${project.build.directory}/generated/openapi</output>
 							<apiPackage>com.product.restful.apis</apiPackage>
 							<modelPackage>com.product.restful.models</modelPackage>
 							<configOptions>
 								<sourceFolder>src/main/java</sourceFolder>
 								<interfaceOnly>true</interfaceOnly>
+								<useTags>true</useTags>
 								<useSpringBoot3>true</useSpringBoot3> <!-- Use Spring Boot 3 -->
 								<useBeanValidation>true</useBeanValidation> <!-- Enable Bean Validation -->
-								<dateLibrary>java8</dateLibrary> <!-- Use Java 8 date and time types -->
 								<dateLibrary>java8-localdatetime</dateLibrary> <!-- Ensure LocalDateTime is used -->
 							</configOptions>
 						</configuration>
