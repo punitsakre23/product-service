@@ -16,15 +16,13 @@ CREATE TABLE product (
     higher_platform_fee             DECIMAL(10, 2) DEFAULT 0,
     available                       BOOLEAN NOT NULL DEFAULT true,
     created_by                      VARCHAR(50) NOT NULL,
-    created_date                    TIMESTAMP NOT NULL DEFAULT NOW(),
+    created_date                    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_by                      VARCHAR(50),
     updated_date                    TIMESTAMP,
-    -- Check constraint to ensure effective_from is before effective_to
     CONSTRAINT effective_dates_check
     CHECK (effective_from <= effective_to),
-    -- Check constraint to enforce specific values for is_platform_fee_applicable
     CONSTRAINT is_platform_fee_applicable_check
-    CHECK (is_platform_fee_applicable IN ('YES', 'NO', 'WAIVE')
+    CHECK (is_platform_fee_applicable IN ('YES', 'NO', 'WAIVE'))
 );
 
 -- Add comments for each column
