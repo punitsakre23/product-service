@@ -44,5 +44,4 @@ COMMENT ON COLUMN product.updated_by IS 'User or system that last updated the pr
 COMMENT ON COLUMN product.updated_date IS 'Date and time when the product was last updated';
 
 -- Rollback for product table
---rollback
-DROP TABLE product;
+--rollback DROP TABLE IF EXISTS product;
