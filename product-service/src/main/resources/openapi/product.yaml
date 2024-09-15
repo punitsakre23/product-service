@@ -22,6 +22,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetAllProducts'
+    post:
+      tags:
+        - Product Controller
+      summary: Add a product
+      operationId: addProduct
+      requestBody:
+        description: JSON object of a product
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProduct'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
 
 components:
   schemas:
@@ -42,6 +61,7 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           example: 1
         productId:
           type: string
@@ -49,11 +69,11 @@ components:
         effectiveFrom:
           type: string
           format: date
-          example: "2024-09-08T14:32:45.123"
+          example: "2024-09-08"
         effectiveTo:
           type: string
           format: date
-          example: "2024-09-08T14:32:45.123"
+          example: "2024-09-08"
         bookingChannel:
           type: string
           example: "IPHONE"
@@ -95,3 +115,42 @@ components:
           type: string
           format: date-time
           example: "2024-09-08T14:32:45.123"
+
+    CreateProduct:
+      type: object
+      properties:
+        productId:
+          type: string
+          example: "STD"
+        effectiveFrom:
+          type: string
+          format: date
+          example: "2024-09-08"
+        effectiveTo:
+          type: string
+          format: date
+          example: "2024-09-08"
+        bookingChannel:
+          type: string
+          example: "IPHONE"
+        productGroupId:
+          type: integer
+          example: 2
+        isPlatformFeeApplicable:
+          type: string
+          example: "YES"
+        remarks:
+          type: string
+          example: "remarks"
+        platformFeeThresholdLimit:
+          type: number
+          format: double
+          example: 1.1
+        lowerPlatformFee:
+          type: number
+          format: double
+          example: 2.3
+        higherPlatformFee:
+          type: number
+          format: double
+          example: 5

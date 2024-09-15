@@ -102,12 +102,6 @@
 			<version>3.0.2</version> <!-- Latest stable version -->
 		</dependency>
 
-		<!-- Spring Security for authentication -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
