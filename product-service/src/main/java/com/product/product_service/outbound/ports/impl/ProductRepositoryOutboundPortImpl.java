@@ -1,5 +1,6 @@
 package com.product.product_service.outbound.ports.impl;
 
+import com.product.product_service.dtos.ProductDto;
 import com.product.product_service.mappers.ProductMapper;
 import com.product.product_service.outbound.ports.ProductRepositoryOutboundPort;
 import com.product.product_service.repositories.ProductRepository;
@@ -25,5 +26,11 @@ public class ProductRepositoryOutboundPortImpl implements ProductRepositoryOutbo
   public Product createAProduct(CreateProduct createProduct) {
     var product = productMapper.mapToProductEntity(createProduct);
     return productMapper.mapToProductResponse(productRepository.save(product));
+  }
+
+  @Override
+  public boolean validateProductExists(ProductDto product) {
+    return productRepository.existsByProductIdAndBookingChannelAndProductGroupId(
+        product.getProductId(), product.getBookingChannel(), product.getProductGroupId());
   }
 }

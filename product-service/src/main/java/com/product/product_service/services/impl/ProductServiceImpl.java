@@ -1,5 +1,8 @@
 package com.product.product_service.services.impl;
 
+import com.product.product_service.constants.ProductConstant;
+import com.product.product_service.dtos.ProductDto;
+import com.product.product_service.exceptions.BadRequestException;
 import com.product.product_service.mappers.ProductMapper;
 import com.product.product_service.outbound.ports.ProductRepositoryOutboundPort;
 import com.product.product_service.services.ProductService;
@@ -30,9 +33,28 @@ public class ProductServiceImpl implements ProductService {
   public Product createAProduct(CreateProduct createProduct) {
     var productDto = productMapper.mapToProductDto(createProduct);
     validateRequest(productDto);
+    validateProductExists(productDto);
     return productRepositoryOutboundPort.createAProduct(createProduct);
   }
 
+  /**
+   * Check if Product Already Exists
+   *
+   * @param product request dto
+   */
+  private void validateProductExists(ProductDto product) {
+    var exists = productRepositoryOutboundPort.validateProductExists(product);
+    if (exists) {
+      throw new BadRequestException(ProductConstant.BAD_REQUEST_EXCEPTION);
+    }
+  }
+
+  /**
+   * Constraint Violation check
+   *
+   * @param dto Generic request dto
+   * @param <T> Generic return type
+   */
   private <T> void validateRequest(T dto) {
     Set<ConstraintViolation<T>> violations = validator.validate(dto);
     if (!violations.isEmpty()) {
