@@ -8,36 +8,35 @@ import com.product.restful.models.Product;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductRepositoryOutboundPort productRepositoryOutboundPort;
-    private final ProductMapper productMapper;
-    private final Validator validator;
+  private final ProductRepositoryOutboundPort productRepositoryOutboundPort;
+  private final ProductMapper productMapper;
+  private final Validator validator;
 
-    @Override
-    public List<Product> getProducts() {
-        return productRepositoryOutboundPort.getProducts();
-    }
+  @Override
+  public List<Product> getProducts() {
+    return productRepositoryOutboundPort.getProducts();
+  }
 
-    @Override
-    public Product createAProduct(CreateProduct createProduct) {
-        var productDto = productMapper.mapToProductDto(createProduct);
-        validateRequest(productDto);
-        return productRepositoryOutboundPort.createAProduct(createProduct);
-    }
+  @Override
+  public Product createAProduct(CreateProduct createProduct) {
+    var productDto = productMapper.mapToProductDto(createProduct);
+    validateRequest(productDto);
+    return productRepositoryOutboundPort.createAProduct(createProduct);
+  }
 
-    private <T> void validateRequest(T dto) {
-        Set<ConstraintViolation<T>> violations = validator.validate(dto);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(violations);
-        }
+  private <T> void validateRequest(T dto) {
+    Set<ConstraintViolation<T>> violations = validator.validate(dto);
+    if (!violations.isEmpty()) {
+      throw new ConstraintViolationException(violations);
     }
+  }
 }

@@ -154,3 +154,59 @@ components:
           type: number
           format: double
           example: 5
+
+    BadRequestErrorResponse:
+      required:
+        - traceId
+        - error
+        - path
+        - timestamp
+      type: object
+      properties:
+        traceId:
+          type: string
+          example: "abcxhjvbcsjacbhbcdswmsxcasdkjcb"
+        error:
+          $ref: '#/components/schemas/BadRequestError'
+        path:
+          type: string
+          example: "/products"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-09-08T14:32:45.123"
+
+    BadRequestError:
+      required:
+        - code
+        - message
+        - data
+      type: object
+      properties:
+        code:
+          type: string
+          example: "BadRequestError"
+        message:
+          type: string
+          example: "Multiple errors in user request"
+        data:
+          $ref: '#/components/schemas/BadRequestErrorData'
+
+    BadRequestErrorData:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/BadRequestFields'
+
+    BadRequestFields:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "field"
+        message:
+          type: array
+          items:
+            type: string

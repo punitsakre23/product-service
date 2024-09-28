@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.1.0</version> <!-- Latest compatible version -->
+			<version>2.2.0</version> <!-- Latest compatible version -->
 		</dependency>
 		<!-- Lombok for reducing boilerplate code -->
 		<dependency>
@@ -86,13 +86,6 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.15.2</version>
-		</dependency>
-
-		<!-- Jackson Nullable for handling @JsonNullable annotations in OpenAPI models -->
-		<dependency>
-			<groupId>org.openapitools</groupId>
-			<artifactId>jackson-databind-nullable</artifactId>
-			<version>0.2.4</version> <!-- Latest version -->
 		</dependency>
 
 		<!-- Jakarta Validation instead of javax.validation -->
@@ -136,7 +129,7 @@
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>6.5.0</version>
+				<version>7.4.0</version>
 				<executions>
 					<execution>
 						<goals>
@@ -151,8 +144,12 @@
 							<modelPackage>com.product.restful.models</modelPackage>
 							<configOptions>
 								<sourceFolder>src/main/java</sourceFolder>
+								<generateModelDocumentation>false</generateModelDocumentation>
+								<openApiNullable>false</openApiNullable>
 								<interfaceOnly>true</interfaceOnly>
 								<useTags>true</useTags>
+								<serializableModel>true</serializableModel>
+								<library>spring-boot</library>
 								<useSpringBoot3>true</useSpringBoot3> <!-- Use Spring Boot 3 -->
 								<useBeanValidation>true</useBeanValidation> <!-- Enable Bean Validation -->
 								<dateLibrary>java8-localdatetime</dateLibrary> <!-- Ensure LocalDateTime is used -->
@@ -180,6 +177,40 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<!-- Spotless Plugin -->
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>2.43.0</version>
+				<executions>
+					<execution>
+						<id>spotless-apply</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>spotless-check</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<java>
+						<excludes>
+							<exclude>**/generated/**/*.java</exclude>
+							<exclude>**/generated-sources/**/*.java</exclude>
+						</excludes>
+						<googleJavaFormat/>
+						<removeUnusedImports/>
+						<importOrder/>
+						<endWithNewline/>
+					</java>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
