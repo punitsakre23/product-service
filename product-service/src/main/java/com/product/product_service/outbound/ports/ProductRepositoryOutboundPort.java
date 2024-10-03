@@ -12,4 +12,6 @@ public interface ProductRepositoryOutboundPort {
   Product createAProduct(CreateProduct createProduct);
 
   boolean validateProductExists(ProductDto product);
+
+  Product getProductById(Long id);
 }

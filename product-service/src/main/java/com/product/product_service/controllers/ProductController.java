@@ -31,4 +31,10 @@ public class ProductController implements ProductControllerApi {
     log.info("Add a product: {}", createProduct.getProductId());
     return ResponseEntity.ok(productService.createAProduct(createProduct));
   }
+
+  @Override
+  public ResponseEntity<Product> getProductDetail(Long id) {
+    log.info("Get Product Info: {}", id);
+    return ResponseEntity.ok(productService.getProductById(id));
+  }
 }
