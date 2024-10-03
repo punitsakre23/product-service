@@ -62,7 +62,7 @@ public class GlobalExceptionHandler {
         .error(
             new BadRequestError()
                 .code(exception.getClass().getSimpleName())
-                .message("Resource not found"))
+                .message(exception.getMessage()))
         .path(request.getRequestURI())
         .timestamp(LocalDateTime.now());
   }
