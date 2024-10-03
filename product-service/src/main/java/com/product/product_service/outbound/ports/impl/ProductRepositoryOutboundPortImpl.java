@@ -1,6 +1,8 @@
 package com.product.product_service.outbound.ports.impl;
 
+import com.product.product_service.constants.ProductConstant;
 import com.product.product_service.dtos.ProductDto;
+import com.product.product_service.exceptions.NotFoundException;
 import com.product.product_service.mappers.ProductMapper;
 import com.product.product_service.outbound.ports.ProductRepositoryOutboundPort;
 import com.product.product_service.repositories.ProductRepository;
@@ -32,5 +34,14 @@ public class ProductRepositoryOutboundPortImpl implements ProductRepositoryOutbo
   public boolean validateProductExists(ProductDto product) {
     return productRepository.existsByProductIdAndBookingChannelAndProductGroupId(
         product.getProductId(), product.getBookingChannel(), product.getProductGroupId());
+  }
+
+  @Override
+  public Product getProductById(Long id) {
+    var product =
+        productRepository
+            .findById(id)
+            .orElseThrow(() -> new NotFoundException(ProductConstant.NOT_FOUND_EXCEPTION));
+    return productMapper.mapToProductResponse(product);
   }
 }

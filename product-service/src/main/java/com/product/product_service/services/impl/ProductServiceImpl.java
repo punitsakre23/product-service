@@ -37,6 +37,11 @@ public class ProductServiceImpl implements ProductService {
     return productRepositoryOutboundPort.createAProduct(createProduct);
   }
 
+  @Override
+  public Product getProductById(Long id) {
+    return productRepositoryOutboundPort.getProductById(id);
+  }
+
   /**
    * Check if Product Already Exists
    *
