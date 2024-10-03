@@ -5,27 +5,30 @@ import com.product.restful.apis.ProductControllerApi;
 import com.product.restful.models.CreateProduct;
 import com.product.restful.models.GetAllProducts;
 import com.product.restful.models.Product;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class ProductController implements ProductControllerApi {
 
-    private final ProductService productService;
+  private final ProductService productService;
 
-    @Override
-    public ResponseEntity<GetAllProducts> getAllProducts() {
-        var listOfProducts = productService.getProducts();
-        GetAllProducts allProducts = new GetAllProducts().data(listOfProducts).timestamp(LocalDateTime.now());
-        return ResponseEntity.ok(allProducts);
-    }
+  @Override
+  public ResponseEntity<GetAllProducts> getAllProducts() {
+    var listOfProducts = productService.getProducts();
+    GetAllProducts allProducts =
+        new GetAllProducts().data(listOfProducts).timestamp(LocalDateTime.now());
+    return ResponseEntity.ok(allProducts);
+  }
 
-    @Override
-    public ResponseEntity<Product> addProduct(CreateProduct createProduct) {
-        return ResponseEntity.ok(productService.createAProduct(createProduct));
-    }
+  @Override
+  public ResponseEntity<Product> addProduct(CreateProduct createProduct) {
+    log.info("Add a product: {}", createProduct.getProductId());
+    return ResponseEntity.ok(productService.createAProduct(createProduct));
+  }
 }

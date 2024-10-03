@@ -40,6 +40,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
+        '400':
+          description: Bad Request response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ConstraintViolationErrorResponse'
+                  - $ref: '#/components/schemas/BadRequestErrorResponse'
+
+
 
 
 components:
@@ -154,3 +164,127 @@ components:
           type: number
           format: double
           example: 5
+
+    ConstraintViolationErrorResponse:
+      required:
+        - traceId
+        - error
+        - path
+        - timestamp
+      type: object
+      properties:
+        traceId:
+          type: string
+          example: "abcxhjvbcsjacbhbcdswmsxcasdkjcb"
+        error:
+          $ref: '#/components/schemas/ConstraintViolationError'
+        path:
+          type: string
+          example: "/products"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-09-08T14:32:45.123"
+
+    ConstraintViolationError:
+      required:
+        - code
+        - message
+        - data
+      type: object
+      properties:
+        code:
+          type: string
+          example: "ConstraintViolationError"
+        message:
+          type: string
+          example: "Multiple errors in user request"
+        data:
+          $ref: '#/components/schemas/ConstraintViolationErrorData'
+
+    ConstraintViolationErrorData:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConstraintViolationFields'
+
+    ConstraintViolationFields:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "field"
+        message:
+          type: array
+          items:
+            type: string
+
+    NotFoundErrorResponse:
+      required:
+        - traceId
+        - error
+        - path
+        - timestamp
+      type: object
+      properties:
+        traceId:
+          type: string
+          example: "abcxhjvbcsjacbhbcdswmsxcasdkjcb"
+        error:
+          $ref: '#/components/schemas/NotFoundError'
+        path:
+          type: string
+          example: "/products"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-09-08T14:32:45.123"
+
+    NotFoundError:
+      required:
+        - code
+        - message
+      type: object
+      properties:
+        code:
+          type: string
+          example: "NotFoundException"
+        message:
+          type: string
+          example: "Resource Not Found"
+
+    BadRequestErrorResponse:
+      required:
+        - traceId
+        - error
+        - path
+        - timestamp
+      type: object
+      properties:
+        traceId:
+          type: string
+          example: "abcxhjvbcsjacbhbcdswmsxcasdkjcb"
+        error:
+          $ref: '#/components/schemas/BadRequestError'
+        path:
+          type: string
+          example: "/products"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-09-08T14:32:45.123"
+
+    BadRequestError:
+      required:
+        - code
+        - message
+      type: object
+      properties:
+        code:
+          type: string
+          example: "NotFoundException"
+        message:
+          type: string
+          example: "Resource Not Found"
