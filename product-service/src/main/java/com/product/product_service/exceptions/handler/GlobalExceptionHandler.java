@@ -82,47 +82,47 @@ public class GlobalExceptionHandler {
   @ResponseStatus(HttpStatus.NOT_FOUND)
   @ExceptionHandler(NotFoundException.class)
   public NotFoundErrorResponse handleNotFoundException(
-          final BadRequestException exception, final HttpServletRequest request) {
+      final NotFoundException exception, final HttpServletRequest request) {
     log.error("inside not found exception handler: {} ", exception.getMessage());
     return new NotFoundErrorResponse()
-            .traceId("0")
-            .error(
-                    new NotFoundError()
-                            .code(exception.getClass().getSimpleName())
-                            .message(exception.getMessage()))
-            .path(request.getRequestURI())
-            .timestamp(LocalDateTime.now());
+        .traceId("0")
+        .error(
+            new NotFoundError()
+                .code(exception.getClass().getSimpleName())
+                .message(exception.getMessage()))
+        .path(request.getRequestURI())
+        .timestamp(LocalDateTime.now());
   }
 
   @ResponseBody
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(InternalServerException.class)
   public InternalServerErrorResponse handleInternalServerException(
-          final InternalServerException exception, final HttpServletRequest request) {
+      final InternalServerException exception, final HttpServletRequest request) {
     log.error("inside internal server exception handler: {} ", exception.getMessage());
     return new InternalServerErrorResponse()
-            .traceId("0")
-            .error(
-                    new InternalServerError()
-                            .code(exception.getClass().getSimpleName())
-                            .message(exception.getMessage()))
-            .path(request.getRequestURI())
-            .timestamp(LocalDateTime.now());
+        .traceId("0")
+        .error(
+            new InternalServerError()
+                .code(exception.getClass().getSimpleName())
+                .message(exception.getMessage()))
+        .path(request.getRequestURI())
+        .timestamp(LocalDateTime.now());
   }
 
   @ResponseBody
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(Exception.class)
   public InternalServerErrorResponse handleException(
-          final Exception exception, final HttpServletRequest request) {
+      final Exception exception, final HttpServletRequest request) {
     log.error("inside exception handler: {} ", exception.getMessage());
     return new InternalServerErrorResponse()
-            .traceId("0")
-            .error(
-                    new InternalServerError()
-                            .code(exception.getClass().getSimpleName())
-                            .message(exception.getMessage()))
-            .path(request.getRequestURI())
-            .timestamp(LocalDateTime.now());
+        .traceId("0")
+        .error(
+            new InternalServerError()
+                .code(exception.getClass().getSimpleName())
+                .message(exception.getMessage()))
+        .path(request.getRequestURI())
+        .timestamp(LocalDateTime.now());
   }
 }
