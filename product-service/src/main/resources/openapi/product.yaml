@@ -22,6 +22,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetAllProducts'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
     post:
       tags:
         - Product Controller
@@ -48,9 +54,45 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/ConstraintViolationErrorResponse'
                   - $ref: '#/components/schemas/BadRequestErrorResponse'
-
-
-
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+  /v1.0/products/{id}:
+    get:
+      tags:
+        - Product Controller
+      summary: Get Product Detail
+      operationId: getProductDetail
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int64
+          required: true
+          description: id of product
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
 
 components:
   schemas:
@@ -284,7 +326,41 @@ components:
       properties:
         code:
           type: string
-          example: "NotFoundException"
+          example: "BadRequestException"
         message:
           type: string
-          example: "Resource Not Found"
+          example: "BadRequestError"
+
+    InternalServerErrorResponse:
+      required:
+        - traceId
+        - error
+        - path
+        - timestamp
+      type: object
+      properties:
+        traceId:
+          type: string
+          example: "abcxhjvbcsjacbhbcdswmsxcasdkjcb"
+        error:
+          $ref: '#/components/schemas/InternalServerError'
+        path:
+          type: string
+          example: "/products"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-09-08T14:32:45.123"
+
+    InternalServerError:
+      required:
+        - code
+        - message
+      type: object
+      properties:
+        code:
+          type: string
+          example: "InternalServerException"
+        message:
+          type: string
+          example: "Internal Server Error"

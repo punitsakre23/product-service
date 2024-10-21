@@ -37,16 +37,19 @@ public class ProductServiceImpl implements ProductService {
     return productRepositoryOutboundPort.createAProduct(createProduct);
   }
 
+  @Override
+  public Product getProductById(Long id) {
+    return productRepositoryOutboundPort.getProductById(id);
+  }
+
   /**
    * Check if Product Already Exists
    *
    * @param product request dto
    */
   private void validateProductExists(ProductDto product) {
-    var exists = productRepositoryOutboundPort.validateProductExists(product);
-    if (exists) {
-      throw new BadRequestException(ProductConstant.BAD_REQUEST_EXCEPTION);
-    }
+    if (productRepositoryOutboundPort.validateProductExists(product))
+      throw new BadRequestException(ProductConstant.PRODUCT_EXISTS);
   }
 
   /**
